@@ -1,26 +1,18 @@
-"use client";
-
 import ReactMarkdown from "react-markdown";
 
 // 플러그인들
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import remarkToc from "remark-toc";
-import rehypeHighlight from "rehype-highlight";
-import remarkRehype from "remark-rehype";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+// import remarkGfm from "remark-gfm";
+// import rehypeRaw from "rehype-raw";
+// import remarkToc from "remark-toc";
+// import rehypeHighlight from "rehype-highlight";
+// import remarkRehype from "remark-rehype";
+// import rehypeSlug from "rehype-slug";
+// import rehypeAutolinkHeadings from "rehype-autolink-headings";
 // import "highlight.js/styles/base16/dracula.min.css";
-import { fetchArticleContent } from "@utils/notion";
-import {
-  DetailedHTMLProps,
-  ReactElement,
-  TableHTMLAttributes,
-  use,
-  useEffect,
-  useState,
-} from "react";
+// import { fetchArticleContent } from "@/utils/notionClient";
+import { DetailedHTMLProps, TableHTMLAttributes } from "react";
 import clsx from "clsx";
+import useFetchArticle from "@/hooks/useFetchArticle";
 
 export const Table = ({
   className,
@@ -31,25 +23,22 @@ export const Table = ({
 >) => {
   return <table className={clsx(className)} {...props} />;
 };
-const { parent: temp } = await fetchArticleContent("2");
+// const { parent: temp } = await fetchArticleContent("2");
 
 interface MarkdownProps {
-  content: string;
+  parent: string;
 }
 
 const MarkdownViewer: React.FC<MarkdownProps> = ({ content }) => (
   <ReactMarkdown>{content}</ReactMarkdown>
 );
 
-export const Post = () => {
-  const [content, setContent] = useState<string | null>(null);
-
-  useEffect(() => {
-    temp && setContent(temp);
-  }, []);
+const Post = async ({ id }: { id: string }) => {
+  const content = (await useFetchArticle(id)) as MarkdownProps;
+  // console.log(content);
   return (
     <>
-      <MarkdownViewer content={temp} />
+      <MarkdownViewer content={content.parent} />
       {/* <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkToc, remarkRehype]}
         // rehypePlugins={[
@@ -85,3 +74,5 @@ export const Post = () => {
     </>
   );
 };
+
+export default Post;

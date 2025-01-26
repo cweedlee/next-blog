@@ -1,10 +1,8 @@
-import { fetchArticleContent, queryResponse } from "@/utils/fetch";
-// import { get } from "http";
-import { GetServerSideProps } from "next";
+import { queryResponse } from "@/utils/fetch";
 
-type ArticleProps = {
-  [key: string]: any;
-};
+// type ArticleProps = {
+//   [key: string]: any;
+// };
 
 export const getServerSideProps = async () => {
   // Fetch data from external API
@@ -13,6 +11,6 @@ export const getServerSideProps = async () => {
   return res;
 };
 
-export default async function fetchDatabas() {
+export default function fetchDatabase() {
   return getServerSideProps();
 }

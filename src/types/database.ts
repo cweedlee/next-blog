@@ -42,7 +42,13 @@ export type DatabaseObjectProps = DatabaseObjectResponse & {
     thumbnail: {
       id: string; // 'LT%3Ay',
       type: "files";
-      files: string[]; // []
+      files: {
+        name: string; // 'thumbnail.png'
+        type: string; // 'image/png'
+        file: {
+          url: string; // 'https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fthumbnail.png'
+        };
+      }[]; // []
     };
     view: {
       id: string; // 'QR%5CK',

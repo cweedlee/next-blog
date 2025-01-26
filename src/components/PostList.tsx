@@ -1,5 +1,6 @@
 import { DatabaseObjectProps, QueryProps } from "@/types/database";
 import { getNotionQuery } from "@/utils/fetch";
+import Link from "next/link";
 
 export default async function PostList({
   queryProps,
@@ -13,26 +14,30 @@ export default async function PostList({
     return null;
   }
 
+  console.log("PostList", db[0].id);
+
   return (
     <div>
       {db &&
         db.length &&
         db.map((post, idx) => (
-          <div key={idx}>
-            {post.properties.thumbnail.files[0]?.file.url && (
-              <img
-                src={post.properties.thumbnail.files[0].file.url}
-                width="100"
-                height="100"
-                alt="thumbnail"
-              />
-            )}
-            <h2>
-              {post.properties.title.title[0]?.plain_text || "title not "}
-            </h2>
-            <p>{post.properties.created.created_time || "no date"}</p>
-            <br />
-          </div>
+          <Link href={`/posts/${post.id}`} key={idx}>
+            <div key={idx}>
+              {post.properties.thumbnail.files[0]?.file.url && (
+                <img
+                  src={post.properties.thumbnail.files[0].file.url}
+                  width="100"
+                  height="100"
+                  alt="thumbnail"
+                />
+              )}
+              <h2>
+                {post.properties.title.title[0]?.plain_text || "title not "}
+              </h2>
+              <p>{post.properties.created.created_time || "no date"}</p>
+              <br />
+            </div>
+          </Link>
         ))}
     </div>
   );

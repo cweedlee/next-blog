@@ -12,7 +12,7 @@ import ReactMarkdown from "react-markdown";
 // import { fetchArticleContent } from "@/utils/notionClient";
 import { DetailedHTMLProps, TableHTMLAttributes } from "react";
 import clsx from "clsx";
-import useFetchArticle from "@/hooks/useFetchArticle";
+import { fetchArticleContent } from "@/utils/fetch";
 
 export const Table = ({
   className,
@@ -29,18 +29,20 @@ interface MarkdownProps {
   parent: string;
 }
 
-const MarkdownViewer: React.FC<MarkdownProps> = ({ content }) => (
-  <ReactMarkdown>{content}</ReactMarkdown>
-);
+// const MarkdownViewer: React.FC<MarkdownProps> = ({
+//   content,
+// }: {
+//   content: string;
+// }) => <ReactMarkdown>{content}</ReactMarkdown>;
 
 const Post = async ({ id }: { id: string }) => {
-  const content = (await useFetchArticle(id)) as MarkdownProps;
-  // console.log(content);
+  const content = (await fetchArticleContent(id)) as unknown as MarkdownProps;
+
   return (
     <>
-      <MarkdownViewer content={content.parent} />
-      {/* <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkToc, remarkRehype]}
+      {/* <MarkdownViewer content={content.parent} /> */}
+      <ReactMarkdown
+        // remarkPlugins={[remarkGfm, remarkToc, remarkRehype]}
         // rehypePlugins={[
         //   rehypeRaw,
         //   rehypeHighlight,
@@ -69,8 +71,8 @@ const Post = async ({ id }: { id: string }) => {
           }
         }
       >
-        {content}
-      </ReactMarkdown> */}
+        {content.parent}
+      </ReactMarkdown>
     </>
   );
 };

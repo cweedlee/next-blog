@@ -1,4 +1,14 @@
-import { DatabaseObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  DatabaseObjectResponse,
+  QueryDatabaseParameters,
+} from "@notionhq/client/build/src/api-endpoints";
+
+export type QueryProps = {
+  filter?: QueryDatabaseParameters["filter"];
+  sorts?: QueryDatabaseParameters["sorts"];
+  start_cursor?: string; //start page , default 1
+  page_size?: number; //default 100;
+};
 
 export type DatabaseObjectProps = DatabaseObjectResponse & {
   properties: DatabaseObjectResponse["properties"] & {

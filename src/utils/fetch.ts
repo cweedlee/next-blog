@@ -1,5 +1,5 @@
-import { QueryDatabaseParameters } from "@notionhq/client/build/src/api-endpoints";
 import { n2m, notionClient } from "./notionClient";
+import { QueryProps } from "@/types/database";
 
 export const queryResponse = await notionClient.databases.query({
   database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID!,
@@ -14,7 +14,7 @@ export const queryResponse = await notionClient.databases.query({
   ],
 });
 
-export const getNotionQuery = async (props?: QueryDatabaseParameters) => {
+export const getNotionQuery = async (props?: QueryProps) => {
   return await notionClient.databases.query({
     database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID!,
     filter: props?.filter || {

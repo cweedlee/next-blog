@@ -1,10 +1,14 @@
-import { DatabaseObjectProps } from "@/types/database";
+import { DatabaseObjectProps, QueryProps } from "@/types/database";
 import { getNotionQuery } from "@/utils/fetch";
-export default async function PostList() {
+
+export default async function PostList({
+  queryProps,
+}: {
+  queryProps?: QueryProps;
+}) {
   // filter. sort 추가 가능
-  const res = await getNotionQuery();
+  const res = await getNotionQuery(queryProps);
   const db = res.results as DatabaseObjectProps[];
-  console.log(db[3].properties.thumbnail.files[0].file.url);
   if (!Object.keys(db[0]).includes("properties")) {
     return null;
   }
